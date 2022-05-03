@@ -19,12 +19,19 @@ const countModifier = (count = 0, action) => {
 };
 const countStore = createStore(countModifier);
 
-countStore.dispatch({ type: "ADD" }); // object only
+const onChange = () => {
+  number.innerHTML = countStore.getState();
+};
 
-// data의 store를 만들고
-// data의 modifier를 만듦
-// dispatch를 이용해 message를 보냄
-// 보낸 message를 action에 넣고
-// action을 체크해줌
+countStore.subscribe(onChange);
 
-console.log(countStore.getState());
+const handleAdd = () => {
+  countStore.dispatch({ type: "ADD" });
+};
+
+const handleMinus = () => {
+  countStore.dispatch({ type: "MINUS" });
+};
+
+add.addEventListener("click", handleAdd);
+minus.addEventListener("click", handleMinus);
