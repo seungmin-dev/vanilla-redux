@@ -14,6 +14,8 @@ const reducer = (state = [], action) => {
       // 상태를 직접적으로 수정하지 말고 새로운 상태를 return 해야 함
       // return state.push(action.text); <- 절대 해서는 안되는 행동!
       return [...state, { text: action.text, id: action.id }];
+    // 공식문서에서 reducer 안에서는 Date.now()를 쓰지 않기를 권장
+    // => action에서 id를 생성하고 받아옴
     case DELETE_TODO:
       return [];
     default:
