@@ -24,7 +24,7 @@ const reducer = (state = [], action) => {
     // 공식문서에서 reducer 안에서는 Date.now()를 쓰지 않기를 권장
     // => action에서 id를 생성하고 받아옴
     case DELETE_TODO:
-      return [];
+      return state.filter((toDo) => toDo.id !== action.id);
     default:
       return state;
   }
@@ -38,22 +38,23 @@ const dispatchAddToDo = (text) => {
   store.dispatch(addToDo(text));
 };
 
-const dispatchDelToDo = (e) => {
-  const id = e.target.parentNode.id;
+const dispatchDeleteToDo = (e) => {
+  const id = parseInt(e.target.parentNode.id);
   store.dispatch(delToDo(id));
 };
 
 const paintToDos = () => {
   const toDos = store.getState();
+  ul.innerHTML = "";
   toDos.forEach((toDo) => {
     const li = document.createElement("li");
     const btn = document.createElement("button");
     btn.innerText = "DEL";
-    btn.addEventListener("click", dispatchDelToDo);
+    btn.addEventListener("click", dispatchDeleteToDo);
     li.id = toDo.id;
     li.innerText = toDo.text;
-    ul.appendChild(li);
     li.appendChild(btn);
+    ul.appendChild(li);
   });
 };
 
