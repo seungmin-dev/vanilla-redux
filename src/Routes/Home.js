@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { connect } from "react-redux";
 
-function Home() {
+function Home({ toDos }) {
   const [text, setText] = useState("");
   function onSubmit(e) {
     e.preventDefault();
@@ -17,9 +18,15 @@ function Home() {
         <input type="text" value={text} onChange={onChange} />
         <button>Add</button>
       </form>
-      <ul></ul>
+      <ul>{JSON.stringify(toDos)}</ul>
     </>
   );
 }
 
-export default Home;
+function mapStateToProps(state, props) {
+  //   return { puppy: true };
+  // connect()는 뒤에 명시되는 component로 보내는 Props에 추가될 수 있도록 허용해줌
+  return { toDos: state };
+}
+// store로부터 state를 가져다주는 함수
+export default connect(mapStateToProps)(Home);
