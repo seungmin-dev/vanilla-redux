@@ -1,14 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { addToDo } from "../store";
+import { actionCreators } from "../store";
 
-function Home({ toDos, dispatch }) {
+function Home({ toDos, addToDo }) {
   const [text, setText] = useState("");
   function onSubmit(e) {
     e.preventDefault();
+    addToDo(text);
     setText("");
-    dispatch(addToDo(text));
   }
   function onChange(e) {
     setText(e.target.value);
@@ -32,9 +32,12 @@ function mapStateToProps(state, props) {
 }
 // store로부터 state를 가져다주는 함수
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return dispatch; // props를 바꿀 수 있게 됨
+function mapDispatchToProps(dispatch) {
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text)), // function을 생성하는 것
+  };
+  // props를 바꿀 수 있게 됨
 }
 // mapState는 필요하지 않고 dispatch는 필요한 경우에 쓰는 함수
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
