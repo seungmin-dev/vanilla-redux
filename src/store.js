@@ -1,5 +1,5 @@
 import { legacy_createStore as createStore } from "redux";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 
 const addToDo = createAction("ADD");
 const deleteToDo = createAction("DELETE");
@@ -34,7 +34,7 @@ const reducer = createReducer([], {
 // redux toolkit이 immer 아래에서 작동하기 때문
 // return [{ text: action.payload, id: Date.now() }, ...state]; <= 이 부분을 알아서 해줌
 
-const store = createStore(reducer);
+const store = configureStore({ reducer });
 
 export const actionCreators = {
   addToDo,
